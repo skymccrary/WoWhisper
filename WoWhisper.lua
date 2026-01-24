@@ -111,7 +111,7 @@ StaticPopupDialogs["WOWHISPER_RESET_CONFIRM"] = {
 -- Create color picker button
 local function CreateColorButton(parent, colorType, label, yOffset)
     local row = CreateFrame("Frame", nil, parent)
-    row:SetSize(360, 30)
+    row:SetSize(260, 30)
     row:SetPoint("TOP", parent, "TOP", 0, yOffset)
     
     -- Label
@@ -187,13 +187,11 @@ end
 -- Create the main settings frame
 local function CreateSettingsFrame()
     local frame = CreateFrame("Frame", "WoWhisperSettingsFrame", UIParent, "BackdropTemplate")
-    frame:SetSize(400, 200)
+    frame:SetSize(300, 200)
     frame:SetPoint("CENTER")
     frame:SetFrameStrata("HIGH")
     frame:SetFrameLevel(100)
-    frame:SetMovable(true)
     frame:EnableMouse(true)
-    frame:RegisterForDrag("LeftButton")
     frame:Hide()
     
     -- Backdrop
@@ -210,22 +208,6 @@ local function CreateSettingsFrame()
     local title = frame:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
     title:SetPoint("TOP", 0, -15)
     title:SetText("WoWhisper Settings")
-    
-    -- Make draggable
-    frame:SetScript("OnDragStart", function(self)
-        self:StartMoving()
-    end)
-    
-    frame:SetScript("OnDragStop", function(self)
-        self:StopMovingOrSizing()
-        local point, _, relativePoint, xOfs, yOfs = self:GetPoint()
-        WoWhisperDB.framePosition = {
-            point = point,
-            relativePoint = relativePoint,
-            xOfs = xOfs,
-            yOfs = yOfs
-        }
-    end)
     
     -- Close button
     local closeButton = CreateFrame("Button", nil, frame, "UIPanelCloseButton")
@@ -245,13 +227,10 @@ local function CreateSettingsFrame()
         StaticPopup_Show("WOWHISPER_RESET_CONFIRM")
     end)
     
-    -- Restore position on show
+    -- Always center on show
     frame:SetScript("OnShow", function(self)
-        if WoWhisperDB.framePosition then
-            local pos = WoWhisperDB.framePosition
-            self:ClearAllPoints()
-            self:SetPoint(pos.point, UIParent, pos.relativePoint, pos.xOfs, pos.yOfs)
-        end
+        self:ClearAllPoints()
+        self:SetPoint("CENTER", UIParent, "CENTER", 0, 0)
         UpdateColorDisplay("whisper")
         UpdateColorDisplay("party")
         UpdateColorDisplay("bnet")
