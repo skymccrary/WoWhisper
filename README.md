@@ -52,12 +52,13 @@ WoWhisper includes an easy-to-use in-game color picker:
 
 All channels default to **Gold** (#FFD700) for a classic, elegant look that's easy to read.
 
-## Author
+## Created by
 
-Created by: Ghostmemoria & Nasbrew
+Ghostmemoria & Nasbrew
 
 ## Version
 2.0
+
 
 
 
