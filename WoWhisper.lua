@@ -13,6 +13,7 @@
 -- Active Channel Colors
 local WHISPER_COLOR = "FFD700"  -- Gold: FFD700 (default)
 local PARTY_COLOR = "FFD700"    -- Gold: FFD700 (default)
+local BNET_WHISPER_COLOR = "FFD700"  -- Gold: FFD700 (default)
 
 
 
@@ -27,6 +28,13 @@ local playerName = UnitName("player")
 local function FilterWhisperInform(self, event, message, ...)
     -- Apply color to outbound whisper messages
     local coloredMessage = "|cFF" .. WHISPER_COLOR .. message .. "|r"
+    return false, coloredMessage, ...
+end
+
+-- Filter function for sent BattleNet whispers
+local function FilterBNetWhisperInform(self, event, message, ...)
+    -- Apply color to outbound BattleNet whisper messages
+    local coloredMessage = "|cFF" .. BNET_WHISPER_COLOR .. message .. "|r"
     return false, coloredMessage, ...
 end
 
@@ -45,5 +53,6 @@ end
 
 -- Register chat filters
 ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER_INFORM", FilterWhisperInform)
+ChatFrame_AddMessageEventFilter("CHAT_MSG_BN_WHISPER_INFORM", FilterBNetWhisperInform)
 ChatFrame_AddMessageEventFilter("CHAT_MSG_PARTY", FilterParty)
 ChatFrame_AddMessageEventFilter("CHAT_MSG_PARTY_LEADER", FilterParty)
