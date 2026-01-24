@@ -207,7 +207,7 @@ local function CreateSettingsFrame()
     -- Title bar
     local title = frame:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
     title:SetPoint("TOP", 0, -15)
-    title:SetText("WoWhisper Settings")
+    title:SetText("WoWhisper")
     
     -- Close button
     local closeButton = CreateFrame("Button", nil, frame, "UIPanelCloseButton")
@@ -218,10 +218,24 @@ local function CreateSettingsFrame()
     CreateColorButton(frame, "party", "Party", -80)
     CreateColorButton(frame, "bnet", "BNet", -115)
     
-    -- Reset button
-    local resetButton = CreateFrame("Button", nil, frame, "UIPanelButtonTemplate")
-    resetButton:SetSize(150, 25)
-    resetButton:SetPoint("BOTTOM", 0, 15)
+    -- Button container for centering
+    local buttonContainer = CreateFrame("Frame", nil, frame)
+    buttonContainer:SetSize(240, 25)
+    buttonContainer:SetPoint("BOTTOM", 0, 15)
+    
+    -- Accept button (left)
+    local acceptButton = CreateFrame("Button", nil, buttonContainer, "UIPanelButtonTemplate")
+    acceptButton:SetSize(110, 25)
+    acceptButton:SetPoint("LEFT", buttonContainer, "LEFT", 0, 0)
+    acceptButton:SetText("Accept")
+    acceptButton:SetScript("OnClick", function()
+        frame:Hide()
+    end)
+    
+    -- Reset button (right)
+    local resetButton = CreateFrame("Button", nil, buttonContainer, "UIPanelButtonTemplate")
+    resetButton:SetSize(120, 25)
+    resetButton:SetPoint("RIGHT", buttonContainer, "RIGHT", 0, 0)
     resetButton:SetText("Reset to Defaults")
     resetButton:SetScript("OnClick", function()
         StaticPopup_Show("WOWHISPER_RESET_CONFIRM")
@@ -256,7 +270,7 @@ local function CreateMinimapButton()
     local icon = button:CreateTexture(nil, "BACKGROUND")
     icon:SetSize(20, 20)
     icon:SetPoint("CENTER", 0, 1)
-    icon:SetTexture("Interface\\Icons\\INV_Misc_Note_06")
+    icon:SetTexture("Interface\\AddOns\\WoWhisper\\media\\WoWhisperLogo")
     
     -- Border
     local overlay = button:CreateTexture(nil, "OVERLAY")
@@ -343,8 +357,10 @@ eventFrame:SetScript("OnEvent", function(self, event, arg1)
             }
         end
         
-        if not WoWhisperDB.minimapAngle then
-            WoWhisperDB.minimapAngle = 225  -- Lower left position
+        -- Set a default minimap position that is higher up (upper-left),
+        -- but don't override players who have already dragged the button.
+        if not WoWhisperDB.minimapAngle or WoWhisperDB.minimapAngle == 225 then
+            WoWhisperDB.minimapAngle = 135  -- Upper left position
         end
         
         -- Create UI
@@ -382,4 +398,3 @@ SlashCmdList["WOWHISPER"] = function(msg)
         end
     end
 end
-
