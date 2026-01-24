@@ -1,6 +1,6 @@
 # WoWhisper
 
-Allows you to select custom colors for your outbound messages in /whisper, /party, and bnet whisper chat channels to iimprove readability and the overall in-game chat experience.
+Allows you to select custom colors for your outbound messages in /whisper, /party, and bnet whisper chat channels to improve readability and the overall in-game chat experience.
 
 Currently available on:
 World of Warcraft Classic Anniversary - The Burning Crusade (TBC)
@@ -63,5 +63,6 @@ Created by [@skymccrary](https://github.com/skymccrary)
 ## Version
 
 2.0
+
 
 
