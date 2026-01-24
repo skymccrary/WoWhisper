@@ -59,4 +59,4 @@ Created by [@skymccrary](https://github.com/skymccrary)
 
 ## Version
 
-2.0.0
+2.0
