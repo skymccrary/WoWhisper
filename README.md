@@ -1,4 +1,4 @@
-# **<span style="color:#F1C40F;">WoWhisper</span>**
+# WoWhisper
 
 Allows you to select custom colors for your outbound messages in /whisper, /party, and bnet whisper chat channels to improve readability and the overall in-game chat experience.
 
@@ -22,7 +22,9 @@ Allows you to select custom colors for your outbound messages in /whisper, /part
 1. Download the WoWhisper.zip folder and extract all.
 2. Copy the entire extracted `WoWhisper` folder to your World of Warcraft add-ons directory:
    ```
-   usually: C:\Program Files (x86)\World of Warcraft\_anniversary_\Interface\AddOns
+   Windows: C:\Program Files (x86)\World of Warcraft\_anniversary_\Interface\AddOns
+
+   MacOS: Macintosh HD/Applications/World of Warcraft/_anniversary_/Interface/AddOns
    ```
 3. Restart World of Warcraft (or reload UI with `/reload`)
 4. The add-on will automatically activate with a welcome message!
@@ -58,9 +60,5 @@ Ghostmemoria & Nasbrew
 
 ## Version
 2.0
-
-
-
-
 
 
