@@ -1,4 +1,4 @@
-# WoWhisper
+# **<span style="color:#F1C40F;">WoWhisper</span>**
 
 Allows you to select custom colors for your outbound messages in /whisper, /party, and bnet whisper chat channels to improve readability and the overall in-game chat experience.
 
@@ -58,6 +58,7 @@ Ghostmemoria & Nasbrew
 
 ## Version
 2.0
+
 
 
 
