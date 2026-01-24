@@ -1,5 +1,5 @@
 -- ============================================================================
--- WoWhisper - Color-coded outbound chat messages
+-- WoWhisper - Custom colored outbound chat messages
 -- ============================================================================
 
 local ADDON_NAME = "WoWhisper"
@@ -382,3 +382,4 @@ SlashCmdList["WOWHISPER"] = function(msg)
         end
     end
 end
+
