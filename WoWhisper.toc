@@ -1,8 +1,9 @@
 ## Interface: 20505
 ## Title: WoWhisper
 ## Author: @skymccrary
-## Version: 1.0.0
+## Version: 1.1
 ## Notes: Improves readbility of in-game chat.
 ## IconTexture: Interface\Icons\INV_Misc_Note_06
 
 WoWhisper.lua
+
