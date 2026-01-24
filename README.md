@@ -14,8 +14,8 @@ A World of Warcraft Classic TBC add-on that improves chat readability by custom 
 
 ## Installation
 
-1. Download the WoWhisper folder
-2. Copy the entire `WoWhisper` folder to your World of Warcraft add-ons directory:
+1. Download the WoWhisper zip folder and extract all.
+2. Copy the entire extracted `WoWhisper` folder to your World of Warcraft add-ons directory:
    ```
    usually: C:\Program Files (x86)\World of Warcraft\_anniversary_\Interface\AddOns
    ```
