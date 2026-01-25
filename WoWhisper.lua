@@ -187,7 +187,7 @@ end
 -- Create the main settings frame
 local function CreateSettingsFrame()
     local frame = CreateFrame("Frame", "WoWhisperSettingsFrame", UIParent, "BackdropTemplate")
-    frame:SetSize(300, 200)
+    frame:SetSize(350, 200)
     frame:SetPoint("CENTER")
     frame:SetFrameStrata("HIGH")
     frame:SetFrameLevel(100)
@@ -217,6 +217,19 @@ local function CreateSettingsFrame()
     CreateColorButton(frame, "whisper", "Whisper", -45)
     CreateColorButton(frame, "party", "Party", -80)
     CreateColorButton(frame, "bnet", "BNet", -115)
+    
+    -- Match Whisper button (copies whisper color to party and bnet)
+    local matchButton = CreateFrame("Button", nil, frame, "UIPanelButtonTemplate")
+    matchButton:SetSize(105, 20)
+    matchButton:SetPoint("TOP", frame, "TOP", 102, -98)
+    matchButton:SetText("Match Whisper")
+    matchButton:SetScript("OnClick", function()
+        local whisperColor = WoWhisperDB.colors.whisper
+        WoWhisperDB.colors.party = {r = whisperColor.r, g = whisperColor.g, b = whisperColor.b}
+        WoWhisperDB.colors.bnet = {r = whisperColor.r, g = whisperColor.g, b = whisperColor.b}
+        UpdateColorDisplay("party")
+        UpdateColorDisplay("bnet")
+    end)
     
     -- Button container for centering
     local buttonContainer = CreateFrame("Frame", nil, frame)
