@@ -8,7 +8,7 @@ An Add-on for World of Warcraft Classic - The Burning Crusade (TBC). Allows you 
 <img src="https://github.com/user-attachments/assets/86088fda-b54c-4d23-9239-a132e1aedc44" width="300">
 <img src="https://github.com/user-attachments/assets/79430676-e9ae-4210-907b-64121a52d97f" width="300">
 <img src="https://github.com/user-attachments/assets/f5ef8f5b-ab82-4066-9df7-ab726bfb374f" width="300">
-<img src="https://github.com/user-attachments/assets/b4fe6ceb-2a2e-4c93-a398-1cbe2736800d" width="300">
+<img src="https://github.com/user-attachments/assets/bb2b9156-dcdd-41c2-a8e4-4311ce5f77bf" width="300">
 <img src="https://github.com/user-attachments/assets/adbdb443-c8f7-4181-902f-a753c25b5e4b" width="300">
 
 ## Requirements
@@ -68,7 +68,8 @@ All channels default to **Gold** (#FFD700) for a classic, elegant look that's ea
 Ghostmemoria & Nasbrew
 
 ## Version
-2.0
+2.1
+
 
 
 
