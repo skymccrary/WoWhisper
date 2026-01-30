@@ -53,11 +53,36 @@ local function FilterParty(self, event, message, sender, ...)
     return false, message, sender, ...
 end
 
+-- Filter function for guild chat
+local function FilterGuild(self, event, message, sender, ...)
+    local senderName = sender:match("([^-]+)") or sender
+    
+    if senderName == playerName then
+        local coloredMessage = "|cFF" .. GetColor("guild") .. message .. "|r"
+        return false, coloredMessage, sender, ...
+    end
+    return false, message, sender, ...
+end
+
+-- Filter function for public channels (/1, /2, /3)
+local function FilterChannel(self, event, message, sender, language, channelName, ...)
+    local senderName = sender:match("([^-]+)") or sender
+    local channelNum = channelName and tonumber(channelName:match("^(%d+)"))
+    
+    if senderName == playerName and channelNum and channelNum >= 1 and channelNum <= 3 then
+        local coloredMessage = "|cFF" .. GetColor("public") .. message .. "|r"
+        return false, coloredMessage, sender, language, channelName, ...
+    end
+    return false, message, sender, language, channelName, ...
+end
+
 -- Register chat filters
 ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER_INFORM", FilterWhisperInform)
 ChatFrame_AddMessageEventFilter("CHAT_MSG_BN_WHISPER_INFORM", FilterBNetWhisperInform)
 ChatFrame_AddMessageEventFilter("CHAT_MSG_PARTY", FilterParty)
 ChatFrame_AddMessageEventFilter("CHAT_MSG_PARTY_LEADER", FilterParty)
+ChatFrame_AddMessageEventFilter("CHAT_MSG_GUILD", FilterGuild)
+ChatFrame_AddMessageEventFilter("CHAT_MSG_CHANNEL", FilterChannel)
 
 -- ============================================================================
 -- Settings Frame
@@ -86,11 +111,15 @@ local function ResetColorsToDefault()
     WoWhisperDB.colors = {
         whisper = {r = DEFAULT_COLOR.r, g = DEFAULT_COLOR.g, b = DEFAULT_COLOR.b},
         party = {r = DEFAULT_COLOR.r, g = DEFAULT_COLOR.g, b = DEFAULT_COLOR.b},
-        bnet = {r = DEFAULT_COLOR.r, g = DEFAULT_COLOR.g, b = DEFAULT_COLOR.b}
+        guild = {r = DEFAULT_COLOR.r, g = DEFAULT_COLOR.g, b = DEFAULT_COLOR.b},
+        bnet = {r = DEFAULT_COLOR.r, g = DEFAULT_COLOR.g, b = DEFAULT_COLOR.b},
+        public = {r = DEFAULT_COLOR.r, g = DEFAULT_COLOR.g, b = DEFAULT_COLOR.b}
     }
     UpdateColorDisplay("whisper")
     UpdateColorDisplay("party")
+    UpdateColorDisplay("guild")
     UpdateColorDisplay("bnet")
+    UpdateColorDisplay("public")
     print("|cFFFFD700WoWhisper:|r All colors reset to gold.")
 end
 
@@ -108,21 +137,21 @@ StaticPopupDialogs["WOWHISPER_RESET_CONFIRM"] = {
     preferredIndex = 3,
 }
 
--- Create color picker button
-local function CreateColorButton(parent, colorType, label, yOffset)
+-- Create color picker button (supports grid layout with x,y offsets)
+local function CreateColorButton(parent, colorType, label, xOffset, yOffset)
     local row = CreateFrame("Frame", nil, parent)
-    row:SetSize(260, 30)
-    row:SetPoint("TOP", parent, "TOP", 0, yOffset)
+    row:SetSize(140, 28)
+    row:SetPoint("TOP", parent, "TOP", xOffset, yOffset)
     
-    -- Label
+    -- Label (right-aligned before swatch)
     local labelText = row:CreateFontString(nil, "OVERLAY", "GameFontNormal")
-    labelText:SetPoint("CENTER", row, "CENTER", -50, 0)
+    labelText:SetPoint("RIGHT", row, "CENTER", -5, 0)
     labelText:SetText(label .. ":")
     
-    -- Color swatch button
+    -- Color swatch button (fixed position, left of center)
     local button = CreateFrame("Button", nil, row)
-    button:SetSize(24, 24)
-    button:SetPoint("CENTER", row, "CENTER", 0, 0)
+    button:SetSize(22, 22)
+    button:SetPoint("LEFT", row, "CENTER", 5, 0)
     
     local bg = button:CreateTexture(nil, "BACKGROUND")
     bg:SetAllPoints()
@@ -187,7 +216,7 @@ end
 -- Create the main settings frame
 local function CreateSettingsFrame()
     local frame = CreateFrame("Frame", "WoWhisperSettingsFrame", UIParent, "BackdropTemplate")
-    frame:SetSize(350, 200)
+    frame:SetSize(280, 270)
     frame:SetPoint("CENTER")
     frame:SetFrameStrata("HIGH")
     frame:SetFrameLevel(100)
@@ -213,45 +242,49 @@ local function CreateSettingsFrame()
     local closeButton = CreateFrame("Button", nil, frame, "UIPanelCloseButton")
     closeButton:SetPoint("TOPRIGHT", -5, -5)
     
-    -- Color buttons
-    CreateColorButton(frame, "whisper", "Whisper", -45)
-    CreateColorButton(frame, "party", "Party", -80)
-    CreateColorButton(frame, "bnet", "BNet", -115)
+    -- Color buttons (single column)
+    CreateColorButton(frame, "whisper", "Whisper", 0, -45)
+    CreateColorButton(frame, "party", "Party", 0, -75)
+    CreateColorButton(frame, "guild", "Guild", 0, -105)
+    CreateColorButton(frame, "bnet", "BNet", 0, -135)
+    CreateColorButton(frame, "public", "Public /1/2/3", 0, -165)
     
-    -- Match Whisper button (copies whisper color to party and bnet)
+    -- Match all to Whisper button (centered above bottom buttons)
     local matchButton = CreateFrame("Button", nil, frame, "UIPanelButtonTemplate")
-    matchButton:SetSize(105, 20)
-    matchButton:SetPoint("TOP", frame, "TOP", 102, -98)
-    matchButton:SetText("Match Whisper")
+    matchButton:SetSize(160, 24)
+    matchButton:SetPoint("BOTTOM", frame, "BOTTOM", 0, 52)
+    matchButton:SetText("Match all to Whisper")
     matchButton:SetScript("OnClick", function()
+        PlaySound(SOUNDKIT.IG_MAINMENU_OPTION)
         local whisperColor = WoWhisperDB.colors.whisper
         WoWhisperDB.colors.party = {r = whisperColor.r, g = whisperColor.g, b = whisperColor.b}
+        WoWhisperDB.colors.guild = {r = whisperColor.r, g = whisperColor.g, b = whisperColor.b}
         WoWhisperDB.colors.bnet = {r = whisperColor.r, g = whisperColor.g, b = whisperColor.b}
+        WoWhisperDB.colors.public = {r = whisperColor.r, g = whisperColor.g, b = whisperColor.b}
         UpdateColorDisplay("party")
+        UpdateColorDisplay("guild")
         UpdateColorDisplay("bnet")
+        UpdateColorDisplay("public")
     end)
     
-    -- Button container for centering
-    local buttonContainer = CreateFrame("Frame", nil, frame)
-    buttonContainer:SetSize(240, 25)
-    buttonContainer:SetPoint("BOTTOM", 0, 15)
+    -- Reset button (bottom left)
+    local resetButton = CreateFrame("Button", nil, frame, "UIPanelButtonTemplate")
+    resetButton:SetSize(100, 24)
+    resetButton:SetPoint("BOTTOMLEFT", frame, "BOTTOMLEFT", 25, 18)
+    resetButton:SetText("Reset to Gold")
+    resetButton:SetScript("OnClick", function()
+        PlaySound(SOUNDKIT.IG_MAINMENU_OPTION)
+        StaticPopup_Show("WOWHISPER_RESET_CONFIRM")
+    end)
     
-    -- Accept button (left)
-    local acceptButton = CreateFrame("Button", nil, buttonContainer, "UIPanelButtonTemplate")
-    acceptButton:SetSize(110, 25)
-    acceptButton:SetPoint("LEFT", buttonContainer, "LEFT", 0, 0)
+    -- Accept button (bottom right)
+    local acceptButton = CreateFrame("Button", nil, frame, "UIPanelButtonTemplate")
+    acceptButton:SetSize(100, 24)
+    acceptButton:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -25, 18)
     acceptButton:SetText("Accept")
     acceptButton:SetScript("OnClick", function()
+        PlaySound(SOUNDKIT.IG_MAINMENU_OPTION)
         frame:Hide()
-    end)
-    
-    -- Reset button (right)
-    local resetButton = CreateFrame("Button", nil, buttonContainer, "UIPanelButtonTemplate")
-    resetButton:SetSize(120, 25)
-    resetButton:SetPoint("RIGHT", buttonContainer, "RIGHT", 0, 0)
-    resetButton:SetText("Reset to Defaults")
-    resetButton:SetScript("OnClick", function()
-        StaticPopup_Show("WOWHISPER_RESET_CONFIRM")
     end)
     
     -- Always center on show
@@ -260,7 +293,9 @@ local function CreateSettingsFrame()
         self:SetPoint("CENTER", UIParent, "CENTER", 0, 0)
         UpdateColorDisplay("whisper")
         UpdateColorDisplay("party")
+        UpdateColorDisplay("guild")
         UpdateColorDisplay("bnet")
+        UpdateColorDisplay("public")
     end)
     
     return frame
@@ -366,8 +401,18 @@ eventFrame:SetScript("OnEvent", function(self, event, arg1)
             WoWhisperDB.colors = {
                 whisper = {r = DEFAULT_COLOR.r, g = DEFAULT_COLOR.g, b = DEFAULT_COLOR.b},
                 party = {r = DEFAULT_COLOR.r, g = DEFAULT_COLOR.g, b = DEFAULT_COLOR.b},
-                bnet = {r = DEFAULT_COLOR.r, g = DEFAULT_COLOR.g, b = DEFAULT_COLOR.b}
+                guild = {r = DEFAULT_COLOR.r, g = DEFAULT_COLOR.g, b = DEFAULT_COLOR.b},
+                bnet = {r = DEFAULT_COLOR.r, g = DEFAULT_COLOR.g, b = DEFAULT_COLOR.b},
+                public = {r = DEFAULT_COLOR.r, g = DEFAULT_COLOR.g, b = DEFAULT_COLOR.b}
             }
+        end
+        
+        -- Ensure guild and public colors exist for existing users
+        if not WoWhisperDB.colors.guild then
+            WoWhisperDB.colors.guild = {r = DEFAULT_COLOR.r, g = DEFAULT_COLOR.g, b = DEFAULT_COLOR.b}
+        end
+        if not WoWhisperDB.colors.public then
+            WoWhisperDB.colors.public = {r = DEFAULT_COLOR.r, g = DEFAULT_COLOR.g, b = DEFAULT_COLOR.b}
         end
         
         -- Set a default minimap position that is higher up (upper-left),
