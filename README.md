@@ -11,16 +11,13 @@ An Add-on for World of Warcraft Classic - The Burning Crusade (TBC). Allows you 
 <img src="https://github.com/user-attachments/assets/bb2b9156-dcdd-41c2-a8e4-4311ce5f77bf" width="300">
 <img src="https://github.com/user-attachments/assets/adbdb443-c8f7-4181-902f-a753c25b5e4b" width="300">
 
-## Requirements
+## Works With
 
-- World of Warcraft Classic Anniversary - The Burning Crusade (TBC) (Client version 2.5.5 or compatible)
-- No dependencies - works standalone
+- World of Warcraft Classic Anniversary - The Burning Crusade (TBC)
 
 ## Features
 
-- **Colored Whispers**: Customize the color of your sent whisper messages (defaults to gold)
-- **Colored Party Chat**: Customize the color of your party messages to distinguish from other party members (defaults to gold)
-- **Colored BNet Whispers**: Customize the color of your BattleNet whisper messages (defaults to gold)
+- **Colored Messages**: Customize the color of your sent messages in various channels (defaults to WoW gold)
 - **In-Game Color Picker**: Easy-to-use minimap button and settings UI with visual color wheel
 - **Draggable Icon**: Move the minimap button to your preferred positions
 - **Persistent Settings**: Your color choices and UI position are saved across sessions
@@ -28,6 +25,10 @@ An Add-on for World of Warcraft Classic - The Burning Crusade (TBC). Allows you 
 
 ## Installation
 
+Via CurseForge:
+1. Search WoWhisper and click install
+
+Manually:
 1. Download the WoWhisper.zip folder and extract all.
 2. Copy the entire extracted `WoWhisper` folder to your World of Warcraft add-ons directory:
    ```
@@ -36,7 +37,7 @@ An Add-on for World of Warcraft Classic - The Burning Crusade (TBC). Allows you 
    MacOS: Macintosh HD/Applications/World of Warcraft/_anniversary_/Interface/AddOns
    ```
 3. Restart World of Warcraft (or reload UI with `/reload`)
-4. The add-on will automatically activate with a welcome message!
+4. The add-on will automatically activate with a welcome message.
 
 ## Customizing Colors
 
@@ -44,14 +45,10 @@ WoWhisper includes an easy-to-use in-game color picker:
 
 1. **Click the WoWhisper minimap button**
    - Or type `/wowhisper` or `/ww` in chat
-2. The settings window will open with three color options:
-   - **Whisper** - Color for your outbound whisper messages
-   - **Party** - Color for your outbound party chat messages  
-   - **BNet** - Color for your outbound BattleNet whisper messages
+2. The settings window will open with color selection options.
 3. **Click any colored square** to open the color picker wheel
 4. **Select your desired color** and click Accept
-5. See your changes immediately in the preview text!
-6. Click **Reset to Defaults** to restore all colors to gold
+5. Click **Reset to Defaults** to restore all colors to WoW Gold
 
 ### Tips
 
@@ -61,12 +58,4 @@ WoWhisper includes an easy-to-use in-game color picker:
 
 ## Default Colors
 
-All channels default to **Gold** (#FFD700) for a classic, elegant look that's easy to read.
-
-
-
-
-
-
-
-
+All channels default to **WoW Gold** (#FFD700) for a classic, elegant look that's easy to read.
