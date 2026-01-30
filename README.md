@@ -1,6 +1,6 @@
 # WoWhisper
 
-An Add-on for World of Warcraft Classic - The Burning Crusade (TBC). Allows you to select custom colors for your outbound messages in /whisper, /party, and bnet whisper chat channels to improve readability and the overall in-game chat experience.
+An Add-on for World of Warcraft Classic - The Burning Crusade (TBC). Allows you to select custom colors for your outbound messages in /whisper, /party, /guild, bnet chat, and Public /1/2/3 channels to improve readability and the overall in-game chat experience.
 
 ## Screenshots
 
@@ -69,6 +69,7 @@ Ghostmemoria & Nasbrew
 
 ## Version
 2.1
+
 
 
 
