@@ -90,10 +90,10 @@ ChatFrame_AddMessageEventFilter("CHAT_MSG_CHANNEL", FilterChannel)
 
 local settingsFrame
 local minimapButton
-local previewTexts = {}
 local colorSwatches = {}
+local channelLabels = {}
 
--- Update swatch and preview text colors
+-- Update swatch and label text colors
 local function UpdateColorDisplay(colorType)
     if not WoWhisperDB or not WoWhisperDB.colors then return end
     
@@ -101,8 +101,8 @@ local function UpdateColorDisplay(colorType)
     if colorSwatches[colorType] then
         colorSwatches[colorType]:SetColorTexture(color.r, color.g, color.b)
     end
-    if previewTexts[colorType] then
-        previewTexts[colorType]:SetTextColor(color.r, color.g, color.b)
+    if channelLabels[colorType] then
+        channelLabels[colorType]:SetTextColor(color.r, color.g, color.b)
     end
 end
 
@@ -147,6 +147,7 @@ local function CreateColorButton(parent, colorType, label, xOffset, yOffset)
     local labelText = row:CreateFontString(nil, "OVERLAY", "GameFontNormal")
     labelText:SetPoint("RIGHT", row, "CENTER", -5, 0)
     labelText:SetText(label .. ":")
+    channelLabels[colorType] = labelText
     
     -- Color swatch button (fixed position, left of center)
     local button = CreateFrame("Button", nil, row)
