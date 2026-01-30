@@ -1,9 +1,10 @@
 ## Interface: 20505
 ## Title: WoWhisper
-## Author: github.com/skymccrary | Ghostmemoria & Nasbrew
+## Author: github.com/skymccrary
 ## Version: 2.1
 ## Notes: Improves readbility of in-game chat.
 ## IconTexture: Interface\AddOns\WoWhisper\media\WoWhisperLogo
 ## SavedVariables: WoWhisperDB
 
 WoWhisper.lua
+
