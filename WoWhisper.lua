@@ -284,7 +284,7 @@ local function CreateSettingsFrame()
     acceptButton:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -25, 18)
     acceptButton:SetText("Accept")
     acceptButton:SetScript("OnClick", function()
-        PlaySound(SOUNDKIT.IG_MAINMENU_OPTION)
+        PlaySound(SOUNDKIT.IG_MAINMENU_OPEN)
         frame:Hide()
     end)
     
