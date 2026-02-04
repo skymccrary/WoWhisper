@@ -1,0 +1,7 @@
+package-as: WoWhisper
+
+ignore:
+  - README.md
+  - .github
+  - .git
+  - .gitignore
