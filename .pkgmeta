@@ -1,4 +1,5 @@
 package-as: WoWhisper
+curseforge-id: 1443224
 
 ignore:
   - README.md
