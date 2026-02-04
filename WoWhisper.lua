@@ -76,13 +76,30 @@ local function FilterChannel(self, event, message, sender, language, channelName
     return false, message, sender, language, channelName, ...
 end
 
+-- Filter function for battleground, instance, and say chat (treated same as public)
+local function FilterBattlegroundInstance(self, event, message, sender, ...)
+    local senderName = sender:match("([^-]+)") or sender
+    
+    if senderName == playerName then
+        local coloredMessage = "|cFF" .. GetColor("public") .. message .. "|r"
+        return false, coloredMessage, sender, ...
+    end
+    return false, message, sender, ...
+end
+
 -- Register chat filters
 ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER_INFORM", FilterWhisperInform)
 ChatFrame_AddMessageEventFilter("CHAT_MSG_BN_WHISPER_INFORM", FilterBNetWhisperInform)
 ChatFrame_AddMessageEventFilter("CHAT_MSG_PARTY", FilterParty)
 ChatFrame_AddMessageEventFilter("CHAT_MSG_PARTY_LEADER", FilterParty)
 ChatFrame_AddMessageEventFilter("CHAT_MSG_GUILD", FilterGuild)
+ChatFrame_AddMessageEventFilter("CHAT_MSG_OFFICER", FilterGuild)
 ChatFrame_AddMessageEventFilter("CHAT_MSG_CHANNEL", FilterChannel)
+ChatFrame_AddMessageEventFilter("CHAT_MSG_SAY", FilterBattlegroundInstance)
+ChatFrame_AddMessageEventFilter("CHAT_MSG_BATTLEGROUND", FilterBattlegroundInstance)
+ChatFrame_AddMessageEventFilter("CHAT_MSG_BATTLEGROUND_LEADER", FilterBattlegroundInstance)
+ChatFrame_AddMessageEventFilter("CHAT_MSG_INSTANCE_CHAT", FilterBattlegroundInstance)
+ChatFrame_AddMessageEventFilter("CHAT_MSG_INSTANCE_CHAT_LEADER", FilterBattlegroundInstance)
 
 -- ============================================================================
 -- Settings Frame
