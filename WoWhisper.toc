@@ -5,5 +5,6 @@
 ## Notes: Improves readbility of in-game chat.
 ## IconTexture: Interface\AddOns\WoWhisper\media\WoWhisperLogo
 ## SavedVariables: WoWhisperDB
+## X-Curse-Project-ID: 1443224
 
 WoWhisper.lua
