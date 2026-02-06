@@ -265,7 +265,7 @@ local function CreateSettingsFrame()
     CreateColorButton(frame, "party", "Party", 0, -75)
     CreateColorButton(frame, "guild", "Guild", 0, -105)
     CreateColorButton(frame, "bnet", "BNet", 0, -135)
-    CreateColorButton(frame, "public", "Public /1/2/3", 0, -165)
+    CreateColorButton(frame, "public", "Public", 0, -165)
     
     -- Match all to Whisper button (centered above bottom buttons)
     local matchButton = CreateFrame("Button", nil, frame, "UIPanelButtonTemplate")
