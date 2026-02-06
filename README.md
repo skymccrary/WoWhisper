@@ -6,7 +6,7 @@ An Add-on for World of Warcraft Classic - The Burning Crusade (TBC). Allows you 
 - /party (/p)
 - /guild (/g) & /officer (/o)
 - BNet chat
-- Public/Misc (/1, /2, /3, /battleground (/bg), /say (/s), /instance)
+- Public (/1, /2, /3, /battleground (/bg), /say (/s), /instance)
 
 ## Screenshots
 
@@ -60,6 +60,7 @@ WoWhisper includes an easy-to-use in-game color picker:
 ## Default Colors
 
 All channels default to **WoW Gold** (#FFD700) for a classic, elegant look that's easy to read.
+
 
 
 
