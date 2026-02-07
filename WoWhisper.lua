@@ -447,9 +447,6 @@ eventFrame:SetScript("OnEvent", function(self, event, arg1)
         tinsert(UISpecialFrames, "WoWhisperSettingsFrame")
         
     elseif event == "PLAYER_LOGIN" then
-        -- Welcome message
-        print("|cFFFFD700WoWhisper|r has loaded! Use /ww or click the minimap button to configure colors.")
-        
         -- Ensure minimap button is visible
         if minimapButton then
             minimapButton:Show()
