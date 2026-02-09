@@ -1,0 +1,116 @@
+name: Validate MCP Configuration
+
+on:
+  pull_request:
+    paths:
+      - '.github/copilot-config.json'
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/copilot-config.json'
+
+jobs:
+  validate-mcp-config:
+    runs-on: ubuntu-latest
+    name: Validate GitHub Copilot MCP Configuration
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Validate JSON syntax
+        run: |
+          echo "Validating .github/copilot-config.json..."
+          if ! cat .github/copilot-config.json | jq empty 2>/dev/null; then
+            echo "❌ Invalid JSON syntax in copilot-config.json"
+            exit 1
+          fi
+          echo "✅ JSON syntax is valid"
+      
+      - name: Validate MCP policy
+        run: |
+          echo "Checking MCP policy..."
+          POLICY=$(cat .github/copilot-config.json | jq -r '.mcp.policy')
+          
+          if [ "$POLICY" != "blocklist" ] && [ "$POLICY" != "allowlist" ]; then
+            echo "❌ Invalid policy: $POLICY"
+            echo "Policy must be either 'blocklist' or 'allowlist'"
+            exit 1
+          fi
+          
+          echo "✅ Policy is valid: $POLICY"
+          
+          # Warn if using allowlist policy
+          if [ "$POLICY" = "allowlist" ]; then
+            echo "⚠️  WARNING: Using 'allowlist' policy is less secure than 'blocklist'"
+            echo "⚠️  Consider switching to 'blocklist' policy for better security"
+          fi
+      
+      - name: Validate MCP arrays
+        run: |
+          echo "Validating MCP arrays..."
+          
+          # Check if allowedMCPs is an array
+          if ! cat .github/copilot-config.json | jq -e '.mcp.allowedMCPs | type == "array"' > /dev/null; then
+            echo "❌ allowedMCPs must be an array"
+            exit 1
+          fi
+          
+          # Check if blockedMCPs is an array
+          if ! cat .github/copilot-config.json | jq -e '.mcp.blockedMCPs | type == "array"' > /dev/null; then
+            echo "❌ blockedMCPs must be an array"
+            exit 1
+          fi
+          
+          echo "✅ MCP arrays are valid"
+      
+      - name: List allowed MCPs
+        run: |
+          echo "Currently allowed MCPs:"
+          cat .github/copilot-config.json | jq -r '.mcp.allowedMCPs[]' | while read mcp; do
+            echo "  - $mcp"
+          done
+      
+      - name: Security check for blocklist policy
+        run: |
+          POLICY=$(cat .github/copilot-config.json | jq -r '.mcp.policy')
+          
+          if [ "$POLICY" = "blocklist" ]; then
+            echo "✅ Using recommended 'blocklist' policy"
+            echo "✅ All MCPs are blocked by default"
+          else
+            echo "⚠️  SECURITY WARNING: Not using 'blocklist' policy"
+            echo "⚠️  This allows MCPs by default, which is less secure"
+            # Don't fail, just warn
+          fi
+      
+      - name: Check for common security issues
+        run: |
+          echo "Checking for security issues..."
+          
+          # Check if allowedMCPs contains wildcards (not supported but could be attempted)
+          if cat .github/copilot-config.json | jq -r '.mcp.allowedMCPs[]' | grep -q '\*'; then
+            echo "⚠️  WARNING: Wildcards in MCP names may not work as expected"
+          fi
+          
+          # Count number of allowed MCPs
+          MCP_COUNT=$(cat .github/copilot-config.json | jq -r '.mcp.allowedMCPs | length')
+          echo "Number of allowed MCPs: $MCP_COUNT"
+          
+          if [ "$MCP_COUNT" -gt 10 ]; then
+            echo "⚠️  WARNING: Large number of allowed MCPs ($MCP_COUNT)"
+            echo "⚠️  Consider if all these MCPs are necessary"
+          fi
+          
+          echo "✅ Security checks complete"
+      
+      - name: Summary
+        run: |
+          echo "================================"
+          echo "MCP Configuration Summary"
+          echo "================================"
+          echo "Policy: $(cat .github/copilot-config.json | jq -r '.mcp.policy')"
+          echo "Allowed MCPs: $(cat .github/copilot-config.json | jq -r '.mcp.allowedMCPs | length')"
+          echo "Blocked MCPs: $(cat .github/copilot-config.json | jq -r '.mcp.blockedMCPs | length')"
+          echo "================================"
