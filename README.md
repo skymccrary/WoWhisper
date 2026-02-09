@@ -61,6 +61,21 @@ WoWhisper includes an easy-to-use in-game color picker:
 
 All channels default to **WoW Gold** (#FFD700) for a classic, elegant look that's easy to read.
 
+## GitHub Copilot Configuration
+
+This repository includes GitHub Copilot MCP (Model Context Protocol) configuration to control which MCPs are allowed during development.
+
+**Key Features:**
+- Blocks all MCPs by default for maximum security
+- Only explicitly approved MCPs are allowed
+- Avoids dependency on the MCP Registry
+- Similar to Cursor's MCP configuration approach
+
+For detailed information about configuring GitHub Copilot MCP settings, see [.github/COPILOT_MCP_CONFIGURATION.md](.github/COPILOT_MCP_CONFIGURATION.md).
+
+**Quick Start:**
+The repository uses a blocklist policy defined in `.github/copilot-config.json`. To modify allowed MCPs, edit that file and add your approved MCPs to the `allowedMCPs` array.
+
 
 
 

@@ -1,0 +1,12 @@
+{
+  "$schema": "https://github.com/github/copilot/blob/main/schemas/copilot-config.schema.json",
+  "mcp": {
+    "policy": "blocklist",
+    "allowedMCPs": [
+      "github-mcp-server",
+      "playwright-browser"
+    ],
+    "blockedMCPs": []
+  },
+  "description": "GitHub Copilot MCP Configuration - By default, blocks all MCPs except those explicitly allowed"
+}
