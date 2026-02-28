@@ -1,6 +1,6 @@
 # WoWhisper
 
-An Add-on for World of Warcraft Classic - The Burning Crusade (TBC). Allows you to select custom colors for your outbound messages in the following channels to improve readability and the overall in-game chat experience:
+An Add-on for World of Warcraft Retail, & Classic Anniversary - The Burning Crusade (TBC). Allows you to select custom colors for your outbound messages in the following channels to improve readability and the overall in-game chat experience:
 
 - /whisper
 - /party (/p)
@@ -13,7 +13,7 @@ An Add-on for World of Warcraft Classic - The Burning Crusade (TBC). Allows you 
 ## ![Screenshot 2026-01-30 175058](https://github.com/user-attachments/assets/2bea81cf-74c3-4a4b-8a98-8823964fc200)
 
 ## Works With
-
+- World of Warcraft (Retail)
 - World of Warcraft Classic Anniversary - The Burning Crusade (TBC)
 
 ## Features
@@ -49,9 +49,3 @@ WoWhisper includes an easy-to-use in-game color picker:
 ## Default Colors
 
 All channels default to **WoW Gold** (#FFD700) for a classic, elegant look that's easy to read.
-
-
-
-
-
-
