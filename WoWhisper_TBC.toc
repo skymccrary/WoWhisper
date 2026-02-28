@@ -1,10 +1,11 @@
 ## Interface: 20505
 ## Title: WoWhisper
 ## Author: github.com/skymccrary
-## Version: 2.3
+## Version: 3.0
 ## Notes: Improves readbility of in-game chat.
 ## IconTexture: Interface\AddOns\WoWhisper\media\WoWhisperLogo
 ## SavedVariables: WoWhisperDB
 ## X-Curse-Project-ID: 1443224
 
 WoWhisper.lua
+
