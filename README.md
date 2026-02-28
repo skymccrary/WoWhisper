@@ -29,17 +29,6 @@ An Add-on for World of Warcraft Classic - The Burning Crusade (TBC). Allows you 
 Via CurseForge:
 1. Search WoWhisper and click install
 
-Manually:
-1. Download the WoWhisper.zip folder and extract all.
-2. Copy the entire extracted `WoWhisper` folder to your World of Warcraft add-ons directory:
-   ```
-   Windows: C:\Program Files (x86)\World of Warcraft\_anniversary_\Interface\AddOns
-
-   MacOS: Macintosh HD/Applications/World of Warcraft/_anniversary_/Interface/AddOns
-   ```
-3. Restart World of Warcraft (or reload UI with `/reload`)
-4. The add-on will automatically activate with a welcome message.
-
 ## Customizing Colors
 
 WoWhisper includes an easy-to-use in-game color picker:
@@ -60,6 +49,7 @@ WoWhisper includes an easy-to-use in-game color picker:
 ## Default Colors
 
 All channels default to **WoW Gold** (#FFD700) for a classic, elegant look that's easy to read.
+
 
 
 
