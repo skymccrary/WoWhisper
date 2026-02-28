@@ -367,13 +367,20 @@ local function CreateMinimapButton()
         end
     end)
     
-    -- Position based on angle
+    -- Position based on angle (dynamic radius to support all minimap sizes)
     local function UpdatePosition()
         local angle = math.rad(WoWhisperDB.minimapAngle or 300)
-        local x = math.cos(angle) * 80
-        local y = math.sin(angle) * 80
+        local radius = (Minimap:GetWidth() / 2) + 10
+        local x = math.cos(angle) * radius
+        local y = math.sin(angle) * radius
+        button:ClearAllPoints()
         button:SetPoint("CENTER", Minimap, "CENTER", x, y)
     end
+    
+    -- Reposition when minimap is resized (Retail allows minimap resizing)
+    Minimap:HookScript("OnSizeChanged", function()
+        UpdatePosition()
+    end)
     
     -- Drag handler
     button:SetScript("OnDragStart", function(self)
