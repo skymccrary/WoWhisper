@@ -1,8 +1,8 @@
-## Interface: 120007
+## Interface: 11509
 ## Title: WoWhisper
 ## Author: github.com/skymccrary
 ## Version: 3.1
-## Notes: Improves readability of in-game chat. Supports WoW Retail.
+## Notes: Improves readability of in-game chat. Supports WoW Classic Era 1.15.9 (including Hardcore and other Classic Original clients).
 ## IconTexture: Interface\AddOns\WoWhisper\media\WoWhisperLogo
 ## SavedVariables: WoWhisperDB
 ## X-Curse-Project-ID: 1443224

@@ -2,7 +2,7 @@
 ## Title: WoWhisper
 ## Author: github.com/skymccrary
 ## Version: 3.1
-## Notes: Improves readbility of in-game chat.
+## Notes: Improves readability of in-game chat. Supports Burning Crusade Classic / Classic Anniversary.
 ## IconTexture: Interface\AddOns\WoWhisper\media\WoWhisperLogo
 ## SavedVariables: WoWhisperDB
 ## X-Curse-Project-ID: 1443224

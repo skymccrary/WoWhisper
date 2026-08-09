@@ -1,6 +1,6 @@
 # WoWhisper
 
-An Add-on for World of Warcraft (Retail), & World of Warcraft Classic Anniversary that allows you to select custom colors for your outbound messages in the following channels to improve readability and the overall in-game chat experience:
+An Add-on for World of Warcraft (Retail), World of Warcraft Classic Era (1.15.9 and other Classic Original clients such as Hardcore), and World of Warcraft Classic Anniversary / Burning Crusade Classic that allows you to select custom colors for your outbound messages in the following channels to improve readability and the overall in-game chat experience:
 
 - /whisper
 - /party (/p)
@@ -14,7 +14,18 @@ An Add-on for World of Warcraft (Retail), & World of Warcraft Classic Anniversar
 
 ## Works With
 - World of Warcraft (Retail)
-- World of Warcraft Classic Anniversary
+- World of Warcraft Classic Era 1.15.9 (Classic Original, including Hardcore and other Era-based clients)
+- World of Warcraft Classic Anniversary / Burning Crusade Classic
+
+## Multi-Client Support
+
+WoWhisper ships with separate TOC files so CurseForge/BigWigs packager can target each game flavor:
+
+| TOC file | Interface | Client |
+| --- | --- | --- |
+| `WoWhisper.toc` | 120007 | Retail |
+| `WoWhisper_Vanilla.toc` | 11509 | Classic Era 1.15.9 (Hardcore, etc.) |
+| `WoWhisper_TBC.toc` | 20506 | Classic Anniversary / TBC Classic |
 
 ## Features
 
