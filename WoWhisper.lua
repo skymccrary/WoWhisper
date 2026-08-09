@@ -1,5 +1,9 @@
 -- ============================================================================
 -- WoWhisper - Custom colored outbound chat messages
+-- Supports: WoW Retail, Classic Era 1.15.9 (Hardcore / Classic Original),
+-- and Classic Anniversary / Burning Crusade Classic.
+-- TOC flavors: WoWhisper.toc (Retail), WoWhisper_Vanilla.toc (Era),
+-- WoWhisper_TBC.toc (Anniversary / TBC).
 -- ============================================================================
 
 local ADDON_NAME = "WoWhisper"
