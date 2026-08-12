@@ -14,7 +14,7 @@ An Add-on for World of Warcraft (Retail), World of Warcraft Classic Era (1.15.9 
 
 ## Works With
 - World of Warcraft (Retail)
-- World of Warcraft Classic Era 1.15.9 (Classic Original, including Hardcore and other Era-based clients)
+- World of Warcraft Classic Era (Classic Original, including Hardcore and other Era-based clients)
 - World of Warcraft Classic Anniversary / Burning Crusade Classic
 
 ## Multi-Client Support
