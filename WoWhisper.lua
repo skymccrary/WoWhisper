@@ -1,13 +1,17 @@
 -- ============================================================================
 -- WoWhisper - Recolor outbound chat
--- Clients: WoW Retail (WoWhisper.toc), WoW Forever (WoWhisper_Camelot.toc)
+-- Clients: World of Warcraft: Retail (WoWhisper.toc), World of Warcraft: Forever (WoWhisper_Camelot.toc)
 -- ============================================================================
 
 local ADDON_NAME = "WoWhisper"
-local playerName = UnitName("player")
 
 -- Default gold color in RGB format (0-1 range)
 local DEFAULT_COLOR = {r = 1, g = 0.843, b = 0}  -- FFD700
+
+-- Forever / modern clients: prefer ChatFrameUtil; fall back to legacy global
+local AddMessageEventFilter =
+    (ChatFrameUtil and ChatFrameUtil.AddMessageEventFilter)
+    or ChatFrame_AddMessageEventFilter
 
 -- ============================================================================
 -- Helper Functions
@@ -27,80 +31,103 @@ local function GetColor(colorType)
     return RGBToHex(DEFAULT_COLOR.r, DEFAULT_COLOR.g, DEFAULT_COLOR.b)
 end
 
+-- True if both values can be compared (not nil / not secret)
+local function CanCompare(a, b)
+    if a == nil or b == nil or a == "" or b == "" then
+        return false
+    end
+    if type(issecretvalue) == "function" then
+        if issecretvalue(a) or issecretvalue(b) then
+            return false
+        end
+    end
+    return true
+end
+
+-- Forever uses first+last names; prefer GUID over string matching
+local function IsOwnMessage(sender, guid)
+    local myGuid = UnitGUID("player")
+    if CanCompare(guid, myGuid) then
+        return guid == myGuid
+    end
+
+    local myName = UnitName("player")
+    if not CanCompare(sender, myName) then
+        return false
+    end
+
+    local senderKey = Ambiguate and Ambiguate(sender, "none") or sender
+    local myKey = Ambiguate and Ambiguate(myName, "none") or myName
+    if not CanCompare(senderKey, myKey) then
+        return false
+    end
+    return senderKey == myKey
+end
+
+local function ColorMessage(colorType, message)
+    return "|cFF" .. GetColor(colorType) .. message .. "|r"
+end
+
 -- ============================================================================
 -- Chat Filter Functions
+-- Event args after message: sender, language, channelName, playerName2,
+-- specialFlags, zoneChannelID, channelIndex, channelBaseName, languageID,
+-- lineID, guid, ...
 -- ============================================================================
 
--- Filter function for sent whispers
 local function FilterWhisperInform(self, event, message, ...)
-    local coloredMessage = "|cFF" .. GetColor("whisper") .. message .. "|r"
-    return false, coloredMessage, ...
+    return false, ColorMessage("whisper", message), ...
 end
 
--- Filter function for sent BattleNet whispers
 local function FilterBNetWhisperInform(self, event, message, ...)
-    local coloredMessage = "|cFF" .. GetColor("bnet") .. message .. "|r"
-    return false, coloredMessage, ...
+    return false, ColorMessage("bnet", message), ...
 end
 
--- Filter function for party chat
-local function FilterParty(self, event, message, sender, ...)
-    local senderName = sender:match("([^-]+)") or sender
-    
-    if senderName == playerName then
-        local coloredMessage = "|cFF" .. GetColor("party") .. message .. "|r"
-        return false, coloredMessage, sender, ...
+local function FilterParty(self, event, message, sender, language, channelName, playerName2, specialFlags, zoneChannelID, channelIndex, channelBaseName, languageID, lineID, guid, ...)
+    if IsOwnMessage(sender, guid) then
+        message = ColorMessage("party", message)
     end
-    return false, message, sender, ...
+    return false, message, sender, language, channelName, playerName2, specialFlags, zoneChannelID, channelIndex, channelBaseName, languageID, lineID, guid, ...
 end
 
--- Filter function for guild chat
-local function FilterGuild(self, event, message, sender, ...)
-    local senderName = sender:match("([^-]+)") or sender
-    
-    if senderName == playerName then
-        local coloredMessage = "|cFF" .. GetColor("guild") .. message .. "|r"
-        return false, coloredMessage, sender, ...
+local function FilterGuild(self, event, message, sender, language, channelName, playerName2, specialFlags, zoneChannelID, channelIndex, channelBaseName, languageID, lineID, guid, ...)
+    if IsOwnMessage(sender, guid) then
+        message = ColorMessage("guild", message)
     end
-    return false, message, sender, ...
+    return false, message, sender, language, channelName, playerName2, specialFlags, zoneChannelID, channelIndex, channelBaseName, languageID, lineID, guid, ...
 end
 
--- Filter function for public channels (/1, /2, /3)
-local function FilterChannel(self, event, message, sender, language, channelName, ...)
-    local senderName = sender:match("([^-]+)") or sender
-    local channelNum = channelName and tonumber(channelName:match("^(%d+)"))
-    
-    if senderName == playerName and channelNum and channelNum >= 1 and channelNum <= 3 then
-        local coloredMessage = "|cFF" .. GetColor("public") .. message .. "|r"
-        return false, coloredMessage, sender, language, channelName, ...
+local function FilterChannel(self, event, message, sender, language, channelName, playerName2, specialFlags, zoneChannelID, channelIndex, channelBaseName, languageID, lineID, guid, ...)
+    local channelNum = channelName and tonumber(tostring(channelName):match("^(%d+)"))
+    local isPublic = (channelNum and channelNum >= 1 and channelNum <= 3)
+        or (type(channelIndex) == "number" and channelIndex >= 1 and channelIndex <= 3)
+
+    if IsOwnMessage(sender, guid) and isPublic then
+        message = ColorMessage("public", message)
     end
-    return false, message, sender, language, channelName, ...
+    return false, message, sender, language, channelName, playerName2, specialFlags, zoneChannelID, channelIndex, channelBaseName, languageID, lineID, guid, ...
 end
 
--- Filter function for battleground, instance, and say chat (treated same as public)
-local function FilterBattlegroundInstance(self, event, message, sender, ...)
-    local senderName = sender:match("([^-]+)") or sender
-    
-    if senderName == playerName then
-        local coloredMessage = "|cFF" .. GetColor("public") .. message .. "|r"
-        return false, coloredMessage, sender, ...
+local function FilterBattlegroundInstance(self, event, message, sender, language, channelName, playerName2, specialFlags, zoneChannelID, channelIndex, channelBaseName, languageID, lineID, guid, ...)
+    if IsOwnMessage(sender, guid) then
+        message = ColorMessage("public", message)
     end
-    return false, message, sender, ...
+    return false, message, sender, language, channelName, playerName2, specialFlags, zoneChannelID, channelIndex, channelBaseName, languageID, lineID, guid, ...
 end
 
 -- Register chat filters
-ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER_INFORM", FilterWhisperInform)
-ChatFrame_AddMessageEventFilter("CHAT_MSG_BN_WHISPER_INFORM", FilterBNetWhisperInform)
-ChatFrame_AddMessageEventFilter("CHAT_MSG_PARTY", FilterParty)
-ChatFrame_AddMessageEventFilter("CHAT_MSG_PARTY_LEADER", FilterParty)
-ChatFrame_AddMessageEventFilter("CHAT_MSG_GUILD", FilterGuild)
-ChatFrame_AddMessageEventFilter("CHAT_MSG_OFFICER", FilterGuild)
-ChatFrame_AddMessageEventFilter("CHAT_MSG_CHANNEL", FilterChannel)
-ChatFrame_AddMessageEventFilter("CHAT_MSG_SAY", FilterBattlegroundInstance)
-ChatFrame_AddMessageEventFilter("CHAT_MSG_BATTLEGROUND", FilterBattlegroundInstance)
-ChatFrame_AddMessageEventFilter("CHAT_MSG_BATTLEGROUND_LEADER", FilterBattlegroundInstance)
-ChatFrame_AddMessageEventFilter("CHAT_MSG_INSTANCE_CHAT", FilterBattlegroundInstance)
-ChatFrame_AddMessageEventFilter("CHAT_MSG_INSTANCE_CHAT_LEADER", FilterBattlegroundInstance)
+AddMessageEventFilter("CHAT_MSG_WHISPER_INFORM", FilterWhisperInform)
+AddMessageEventFilter("CHAT_MSG_BN_WHISPER_INFORM", FilterBNetWhisperInform)
+AddMessageEventFilter("CHAT_MSG_PARTY", FilterParty)
+AddMessageEventFilter("CHAT_MSG_PARTY_LEADER", FilterParty)
+AddMessageEventFilter("CHAT_MSG_GUILD", FilterGuild)
+AddMessageEventFilter("CHAT_MSG_OFFICER", FilterGuild)
+AddMessageEventFilter("CHAT_MSG_CHANNEL", FilterChannel)
+AddMessageEventFilter("CHAT_MSG_SAY", FilterBattlegroundInstance)
+AddMessageEventFilter("CHAT_MSG_BATTLEGROUND", FilterBattlegroundInstance)
+AddMessageEventFilter("CHAT_MSG_BATTLEGROUND_LEADER", FilterBattlegroundInstance)
+AddMessageEventFilter("CHAT_MSG_INSTANCE_CHAT", FilterBattlegroundInstance)
+AddMessageEventFilter("CHAT_MSG_INSTANCE_CHAT_LEADER", FilterBattlegroundInstance)
 
 -- ============================================================================
 -- Settings Frame
