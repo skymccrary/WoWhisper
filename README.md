@@ -13,8 +13,6 @@ Recolor your outbound World of Warcraft chat: whisper, party, guild/officer, BNe
 
 CurseForge: search **WoWhisper** and install.
 
-Forever Beta (manual): copy the addon folder into `World of Warcraft\_classic_beta_\Interface\AddOns\`.
-
 ## Usage
 
 Open settings from the minimap button, or `/wowhisper` / `/ww`. Click a color square to pick a channel color. **Reset to Gold** restores defaults. Drag the minimap button around the minimap; **ESC** closes the window. Colors and button position are saved.
