@@ -2,7 +2,7 @@
 ## Title: WoWhisper
 ## Author: github.com/skymccrary
 ## Version: 3.2
-## Notes: Recolor your outbound chat. Supports WoW Forever Beta (1.60.1).
+## Notes: Recolor your outbound chat. Supports World of Warcraft: Forever.
 ## IconTexture: Interface\AddOns\WoWhisper\media\WoWhisperLogo
 ## SavedVariables: WoWhisperDB
 ## X-Curse-Project-ID: 1443224

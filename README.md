@@ -4,8 +4,8 @@ Recolor your outbound World of Warcraft chat: whisper, party, guild/officer, BNe
 
 ## Supported clients
 
-- World of Warcraft (Retail) — interface 120100
-- World of Warcraft: Forever (Beta) — interface 16001
+- World of Warcraft: Retail — interface 120100
+- World of Warcraft: Forever — interface 16001
 
 ![WoWhisper settings](https://github.com/user-attachments/assets/2bea81cf-74c3-4a4b-8a98-8823964fc200)
 
