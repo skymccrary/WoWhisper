@@ -1,8 +1,8 @@
-## Interface: 120007
+## Interface: 120100
 ## Title: WoWhisper
 ## Author: github.com/skymccrary
-## Version: 3.1
-## Notes: Improves readability of in-game chat. Supports WoW Retail.
+## Version: 3.2
+## Notes: Recolor your outbound chat. Supports WoW Retail.
 ## IconTexture: Interface\AddOns\WoWhisper\media\WoWhisperLogo
 ## SavedVariables: WoWhisperDB
 ## X-Curse-Project-ID: 1443224

@@ -1,9 +1,6 @@
 -- ============================================================================
--- WoWhisper - Custom colored outbound chat messages
--- Supports: WoW Retail, Classic Era 1.15.9 (Hardcore / Classic Original),
--- and Classic Anniversary / Burning Crusade Classic.
--- TOC flavors: WoWhisper.toc (Retail), WoWhisper_Vanilla.toc (Era),
--- WoWhisper_TBC.toc (Anniversary / TBC).
+-- WoWhisper - Recolor outbound chat
+-- Clients: WoW Retail (WoWhisper.toc), WoW Forever (WoWhisper_Camelot.toc)
 -- ============================================================================
 
 local ADDON_NAME = "WoWhisper"
@@ -210,18 +207,7 @@ local function CreateColorButton(parent, colorType, label, xOffset, yOffset)
             b = b,
         }
         
-        -- Use modern API if available, fall back to legacy
-        if ColorPickerFrame.SetupColorPickerAndShow then
-            ColorPickerFrame:SetupColorPickerAndShow(info)
-        else
-            -- Legacy API fallback
-            ColorPickerFrame.func = info.swatchFunc
-            ColorPickerFrame.cancelFunc = info.cancelFunc
-            ColorPickerFrame.hasOpacity = info.hasOpacity
-            ColorPickerFrame.opacity = info.opacity
-            ColorPickerFrame:SetColorRGB(r, g, b)
-            ColorPickerFrame:Show()
-        end
+        ColorPickerFrame:SetupColorPickerAndShow(info)
     end)
     
     button:SetScript("OnEnter", function(self)
