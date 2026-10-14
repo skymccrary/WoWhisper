@@ -1,6 +1,6 @@
 -- ============================================================================
 -- WoWhisper - Recolor outbound chat
--- Clients: World of Warcraft: Retail (WoWhisper.toc), World of Warcraft: Forever (WoWhisper_Camelot.toc)
+-- Clients: World of Warcraft: Forever (WoWhisper.toc)
 -- ============================================================================
 
 local ADDON_NAME = "WoWhisper"
@@ -394,7 +394,7 @@ local function CreateMinimapButton()
         button:SetPoint("CENTER", Minimap, "CENTER", x, y)
     end
     
-    -- Reposition when minimap is resized (Retail allows minimap resizing)
+    -- Reposition when minimap is resized
     Minimap:HookScript("OnSizeChanged", function()
         UpdatePosition()
     end)
