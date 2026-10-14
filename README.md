@@ -4,7 +4,6 @@ Recolor your outbound World of Warcraft chat: whisper, party, guild/officer, BNe
 
 ## Supported clients
 
-- World of Warcraft: Retail
 - World of Warcraft: Forever
 
 ![WoWhisper settings](https://github.com/user-attachments/assets/2bea81cf-74c3-4a4b-8a98-8823964fc200)
